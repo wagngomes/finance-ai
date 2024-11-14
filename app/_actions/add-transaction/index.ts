@@ -1,34 +1,45 @@
-"use server"
+"use server";
 
-import { db } from "@/app/_lib/prisma"
-import { auth } from "@clerk/nextjs/server"
-import { Prisma, TransactionCategory, TransactionPaymentMethod, TransactionType } from "@prisma/client"
-import { addTransactionSchema } from "./schema"
-import { revalidatePath } from "next/cache"
+import { db } from "@/app/_lib/prisma";
+import { auth } from "@clerk/nextjs/server";
+import {
+  Prisma,
+  TransactionCategory,
+  TransactionPaymentMethod,
+  TransactionType,
+} from "@prisma/client";
+import { addTransactionSchema } from "./schema";
+import { revalidatePath } from "next/cache";
 
 interface AddTransactionParams {
-    name: string,
-    amount: number,
-    type: TransactionType,
-    category: TransactionCategory,
-    paymentMethod: TransactionPaymentMethod,
-    date: Date
+  id?: string;
+  name: string;
+  amount: number;
+  type: TransactionType;
+  category: TransactionCategory;
+  paymentMethod: TransactionPaymentMethod;
+  date: Date;
 }
 
-export const addTransaction = async(params: AddTransactionParams) => {
+export const addTransaction = async (params: AddTransactionParams) => {
+  addTransactionSchema.parse(params);
 
-    addTransactionSchema.parse(params)
+  const { userId } = await auth();
 
-    const { userId }= await auth()
+  if (!userId) {
+    throw new Error("Sem autorização");
+  }
 
-    if (!userId) {
-        throw new Error("Sem autorização")
-    }
+  await db.transaction.upsert({
+    where: {
+      id: params.id,
+    },
+    update: { ...params, userId },
+    create: {
+      ...params,
+      userId,
+    },
+  });
 
-    await db.transaction.create({
-        data: { ...params, userId }
-    })
-
-    revalidatePath("/transactions")
-
-}
+  revalidatePath("/transactions");
+};
