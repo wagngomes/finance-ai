@@ -11,7 +11,7 @@ interface SummaryCardProps {
 
 const SummaryCard = ({ icon, title, amount, size }: SummaryCardProps) => {
   return (
-    <Card>
+    <Card className={`${size === "large" ? "" : ""}`}>
       <CardHeader className="flex-row items-center gap-4">
         {icon}
         <p
@@ -21,7 +21,9 @@ const SummaryCard = ({ icon, title, amount, size }: SummaryCardProps) => {
         </p>
       </CardHeader>
       <CardContent className="flex justify-between">
-        <p className="text-2xl font-bold">
+        <p
+          className={`font-bold ${size === "small" ? "text-2xl" : "text-4xl"}`}
+        >
           {Intl.NumberFormat("pt-BR", {
             style: "currency",
             currency: "BRL",
