@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
 import {
   PiggyBankIcon,
   TrendingDownIcon,
@@ -8,11 +7,11 @@ import {
 import SummaryCard from "./summary-card";
 
 import { db } from "@/app/_lib/prisma";
-import { lt } from "date-fns/locale";
 
 interface SummaryCards {
   month: string;
 }
+
 
 const SummaryCards = async ({ month }: SummaryCards) => {
   const where = {
@@ -20,11 +19,14 @@ const SummaryCards = async ({ month }: SummaryCards) => {
       gte: new Date(`2020-${month}-01`),
       lt: new Date(`2024-${month}-31`),
     },
+
   };
+
+
   const despositsTotal = Number(
     (
       await db.transaction.aggregate({
-        where: { ...where, type: "DEPOSIT" },
+        where: { ...where, type: "DEPOSIT"},
         _sum: { amount: true },
       })
     )._sum?.amount,

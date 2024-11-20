@@ -1,4 +1,3 @@
-import { ArrowDownUpIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -22,7 +21,6 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -44,7 +42,6 @@ import {
 } from "../_constants/transactions";
 import { DatePicker } from "./ui/date-picker";
 import { addTransaction } from "../_actions/add-transaction";
-import { useState } from "react";
 
 interface UpsertTransactionDialogProps {
   isOpen: boolean;
