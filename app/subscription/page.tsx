@@ -67,7 +67,7 @@ const Subscription = async () => {
             <CardContent className="space-y-6 py-8">
               <div className="flex items-center gap-3">
                 <CheckIcon className="text-primary" />
-                <p>Apenas 10 trnsações por mês</p>
+                <p>Chega de excel, constrole suas finanças com finance AI!</p>
               </div>
 
               <div className="flex items-center gap-3">
