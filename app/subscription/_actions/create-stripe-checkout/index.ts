@@ -24,7 +24,7 @@ export const createStripeCheckout = async () => {
       },
     },
     mode: "subscription",
-    success_url: "http://localhost:3000",
+    success_url: "https://finance-ai-wagner-software.vercel.app/transactions",
     cancel_url: "http://localhost:3000",
     line_items: [
       {
