@@ -3,7 +3,6 @@ import Navbar from "../_components/navbar";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader } from "../_components/ui/card";
 import { CheckIcon, XIcon } from "lucide-react";
-import { Button } from "../_components/ui/button";
 import AcquirePlanButton from "./_componentes/Acquire-plan-button";
 import { Badge } from "../_components/ui/badge";
 
@@ -13,7 +12,7 @@ const Subscription = async () => {
   if (!userId) {
     redirect("/login");
   }
-  const user = await clerkClient().users.getUser(userId);
+  //const user = await clerkClient().users.getUser(userId);
   return (
     <>
       <Navbar />
