@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
-import { BotIcon } from "lucide-react";
+import { BotIcon, Loader2Icon } from "lucide-react";
 import { generateAiReport } from "../_actions/generate-ai-report";
 import { useState } from "react";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
@@ -23,6 +23,7 @@ interface aiReportButtonProps {
 
 const AiReportButton = ({ month }: aiReportButtonProps) => {
   const [report, setReport] = useState<string | null>(null);
+  const [reportIsLoading, setReportIsLoading] = useState(false);
 
   const handleGenerateReportClick = async () => {
     try {
@@ -55,7 +56,13 @@ const AiReportButton = ({ month }: aiReportButtonProps) => {
           <DialogClose asChild>
             <Button variant="ghost">Cancelar</Button>
           </DialogClose>
-          <Button onClick={handleGenerateReportClick}>Gerar relatório</Button>
+          <Button
+            onClick={handleGenerateReportClick}
+            disabled={reportIsLoading}
+          >
+            {reportIsLoading && <Loader2Icon className="animate-spin" />}
+            Gerar relatório
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
